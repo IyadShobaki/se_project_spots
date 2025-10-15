@@ -97,6 +97,9 @@
     width: 80px;
     margin: 0 0 12px;
   }
+  .profile__column {
+    margin: 0 0 20px;
+  }
   .profile__title {
     margin: 0 0 6px;
     font-size: 20px;
@@ -106,9 +109,7 @@
     margin: 0 0 32px;
     max-width: 288px;
   }
-  .profile__column {
-    margin: 0 0 20px;
-  }
+
   .profile__edit-btn {
     width: 100%;
     justify-content: center;

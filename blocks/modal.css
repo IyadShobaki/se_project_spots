@@ -31,6 +31,13 @@
   align-items: center;
   margin: 0 0 32px;
 }
+.modal__title {
+  color: #212121;
+  margin: 0;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+}
 .modal__close-btn {
   background-image: url(../images/close.svg);
   width: 40px;
@@ -43,14 +50,6 @@
 }
 .modal__close-btn:hover {
   opacity: 1;
-}
-
-.modal__title {
-  color: #212121;
-  margin: 0;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 1;
 }
 .modal__form {
   display: flex;
@@ -115,12 +114,12 @@
   .modal__close-btn {
     margin-right: 10px;
   }
+  .modal__label {
+    margin: 0 0 24px;
+  }
   .modal__input {
     font-size: 16px;
     max-height: 48px;
-  }
-  .modal__label {
-    margin: 0 0 24px;
   }
   .modal__submit-btn {
     max-width: none;
