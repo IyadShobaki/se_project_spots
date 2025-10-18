@@ -11,7 +11,7 @@
   align-items: center;
   padding: 0 10px;
   opacity: 0;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  transition: visibility 0.5s linear 0.5s, opacity 0.5s linear;
 }
 .modal_is-opened {
   visibility: visible;
@@ -44,6 +44,8 @@
 }
 .modal__close-btn {
   background-image: url(../images/close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 40px;
   height: 40px;
   opacity: 40%;
