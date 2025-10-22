@@ -1,5 +1,7 @@
 "use strict";
 
+var _data = require("./data.js");
+
 var editProfileBtn = document.querySelector(".profile__edit-btn");
 var editProfileModal = document.querySelector("#edit-profile-modal");
 var editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
@@ -45,4 +47,9 @@ editProfileCloseBtn.addEventListener("click", function () {
 });
 newPostCloseBtn.addEventListener("click", function () {
   newPostModal.classList.remove("modal_is-opened");
+});
+
+_data.initialCards.forEach(function (card) {
+  console.log(card.name);
+  console.log(card.link);
 });

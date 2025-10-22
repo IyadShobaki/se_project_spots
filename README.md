@@ -15,6 +15,7 @@ Spots is a social media web application where users can share their favorite pho
 
 - HTML5
 - CSS3
+- JavaScript
 - Github for source control and GitHub Pages (for deployment)
 
 **Github Pages**

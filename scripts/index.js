@@ -1,3 +1,5 @@
+import { initialCards } from "./data.js";
+
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
 const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
@@ -57,4 +59,9 @@ editProfileCloseBtn.addEventListener("click", function () {
 });
 newPostCloseBtn.addEventListener("click", function () {
   newPostModal.classList.remove("modal_is-opened");
+});
+
+initialCards.forEach((card) => {
+  console.log(card.name);
+  console.log(card.link);
 });
