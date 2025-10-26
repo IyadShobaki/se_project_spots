@@ -21,8 +21,7 @@ var initialCards = [{
 }, {
   name: "Mountain house",
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg"
-}]; //import { initialCards } from "./data.js";
-
+}];
 var editProfileBtn = document.querySelector(".profile__edit-btn");
 var editProfileModal = document.querySelector("#edit-profile-modal");
 var editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
@@ -38,7 +37,7 @@ var newPostForm = newPostModal.querySelector(".modal__form");
 var newPostCardImageLinkInput = newPostModal.querySelector("#card-image-input");
 var newPostCardCaptionInput = newPostModal.querySelector("#card-caption-input");
 var previewImageModal = document.querySelector("#preview-image-modal");
-var previewImagetCloseBtn = previewImageModal.querySelector(".modal__close-btn");
+var previewImageCloseBtn = previewImageModal.querySelector(".modal__close-btn");
 var previewImage = previewImageModal.querySelector(".modal__image");
 var previewImageCaption = previewImageModal.querySelector(".modal__caption");
 var cardsList = document.querySelector(".cards__list");
@@ -58,9 +57,6 @@ function getCardElement(data) {
   var cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
   cardDeleteBtn.addEventListener("click", function () {
     cardElement.remove();
-    /* other ways:
-       cardDeleteBtn.closest(".card").remove();
-       cardElement = null; */
   });
   cardImageLink.addEventListener("click", function () {
     previewImageCaption.textContent = data.name;
@@ -71,7 +67,7 @@ function getCardElement(data) {
   return cardElement;
 }
 
-previewImagetCloseBtn.addEventListener("click", function () {
+previewImageCloseBtn.addEventListener("click", function () {
   closeModal(previewImageModal);
 });
 
@@ -100,6 +96,7 @@ function handleNewPostSubmit(evt) {
   };
   var cardElement = getCardElement(data);
   cardsList.prepend(cardElement);
+  evt.target.reset();
   closeModal(newPostModal);
 }
 

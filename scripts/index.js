@@ -28,7 +28,6 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
   },
 ];
-//import { initialCards } from "./data.js";
 
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
@@ -55,7 +54,7 @@ const newPostCardCaptionInput = newPostModal.querySelector(
 );
 
 const previewImageModal = document.querySelector("#preview-image-modal");
-const previewImagetCloseBtn =
+const previewImageCloseBtn =
   previewImageModal.querySelector(".modal__close-btn");
 const previewImage = previewImageModal.querySelector(".modal__image");
 const previewImageCaption = previewImageModal.querySelector(".modal__caption");
@@ -84,9 +83,6 @@ function getCardElement(data) {
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
   cardDeleteBtn.addEventListener("click", () => {
     cardElement.remove();
-    /* other ways:
-       cardDeleteBtn.closest(".card").remove();
-       cardElement = null; */
   });
 
   cardImageLink.addEventListener("click", () => {
@@ -98,7 +94,7 @@ function getCardElement(data) {
 
   return cardElement;
 }
-previewImagetCloseBtn.addEventListener("click", () => {
+previewImageCloseBtn.addEventListener("click", () => {
   closeModal(previewImageModal);
 });
 function openModal(modal) {
@@ -127,6 +123,7 @@ function handleNewPostSubmit(evt) {
   const cardElement = getCardElement(data);
   cardsList.prepend(cardElement);
 
+  evt.target.reset();
   closeModal(newPostModal);
 }
 
