@@ -1,5 +1,9 @@
 const initialCards = [
   {
+    name: "Golden Gate Bridge",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+  },
+  {
     name: "Val Thorens",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
   },
@@ -50,6 +54,53 @@ const newPostCardCaptionInput = newPostModal.querySelector(
   "#card-caption-input"
 );
 
+const previewImageModal = document.querySelector("#preview-image-modal");
+const previewImagetCloseBtn =
+  previewImageModal.querySelector(".modal__close-btn");
+const previewImage = previewImageModal.querySelector(".modal__image");
+const previewImageCaption = previewImageModal.querySelector(".modal__caption");
+
+const cardsList = document.querySelector(".cards__list");
+
+const cardTemplate = document
+  .querySelector("#card-template")
+  .content.querySelector(".card");
+
+function getCardElement(data) {
+  const cardElement = cardTemplate.cloneNode(true);
+
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImageLink = cardElement.querySelector(".card__image");
+
+  cardImageLink.src = data.link;
+  cardImageLink.setAttribute("alt", data.name);
+  cardTitle.textContent = data.name;
+
+  const cardLikeBtn = cardElement.querySelector(".card__like-btn");
+  cardLikeBtn.addEventListener("click", (evt) => {
+    evt.target.classList.toggle("card__like-btn_active");
+  });
+
+  const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
+  cardDeleteBtn.addEventListener("click", () => {
+    cardElement.remove();
+    /* other ways:
+       cardDeleteBtn.closest(".card").remove();
+       cardElement = null; */
+  });
+
+  cardImageLink.addEventListener("click", () => {
+    previewImageCaption.textContent = data.name;
+    previewImage.src = data.link;
+    previewImage.alt = data.name;
+    openModal(previewImageModal);
+  });
+
+  return cardElement;
+}
+previewImagetCloseBtn.addEventListener("click", () => {
+  closeModal(previewImageModal);
+});
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
 }
@@ -69,8 +120,12 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  console.log(newPostCardImageLinkInput.value);
-  console.log(newPostCardCaptionInput.value);
+  const data = {
+    name: newPostCardCaptionInput.value,
+    link: newPostCardImageLinkInput.value,
+  };
+  const cardElement = getCardElement(data);
+  cardsList.prepend(cardElement);
 
   closeModal(newPostModal);
 }
@@ -95,6 +150,6 @@ newPostCloseBtn.addEventListener("click", function () {
 });
 
 initialCards.forEach((card) => {
-  console.log(card.name);
-  console.log(card.link);
+  const cardElement = getCardElement(card);
+  cardsList.append(cardElement);
 });
