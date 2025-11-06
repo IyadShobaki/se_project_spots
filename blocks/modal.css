@@ -90,6 +90,12 @@
 .modal__input::placeholder {
   color: rgba(33, 33, 33, 0.4);
 }
+.modal__input-error {
+  display: block;
+  color: rgba(255, 0, 0, 0.7);
+  margin: 8px 0 0;
+}
+
 .modal__submit-btn {
   max-width: 156px;
   width: 100%;
