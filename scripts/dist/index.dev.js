@@ -25,6 +25,7 @@ var initialCards = [{
 var editProfileBtn = document.querySelector(".profile__edit-btn");
 var editProfileModal = document.querySelector("#edit-profile-modal");
 var editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
+var editProfileSubmitBtn = editProfileModal.querySelector(".modal__submit-btn");
 var editProfileForm = editProfileModal.querySelector(".modal__form");
 var editProfileNameInput = editProfileModal.querySelector("#profile-name-input");
 var editProfileDescriptionInput = editProfileModal.querySelector("#profile-description-input");
@@ -33,6 +34,7 @@ var profileDescriptionEl = document.querySelector(".profile__description");
 var newPostBtn = document.querySelector(".profile__new-post-btn");
 var newPostModal = document.querySelector("#new-post-modal");
 var newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
+var newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 var newPostForm = newPostModal.querySelector(".modal__form");
 var newPostCardImageLinkInput = newPostModal.querySelector("#card-image-input");
 var newPostCardCaptionInput = newPostModal.querySelector("#card-caption-input");
@@ -83,6 +85,7 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   profileTitleEl.textContent = editProfileNameInput.value;
   profileDescriptionEl.textContent = editProfileDescriptionInput.value;
+  editProfileSubmitBtn.classList.add("modal__btn_disabled");
   closeModal(editProfileModal);
 }
 
@@ -96,6 +99,7 @@ function handleNewPostSubmit(evt) {
   };
   var cardElement = getCardElement(data);
   cardsList.prepend(cardElement);
+  newPostSubmitBtn.classList.add("modal__btn_disabled");
   evt.target.reset();
   closeModal(newPostModal);
 }
@@ -104,6 +108,8 @@ newPostForm.addEventListener("submit", handleNewPostSubmit);
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileTitleEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
+  hideInputError(editProfileModal, editProfileNameInput, settings);
+  hideInputError(editProfileModal, editProfileDescriptionInput, settings);
   openModal(editProfileModal);
 });
 newPostBtn.addEventListener("click", function () {

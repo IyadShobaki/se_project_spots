@@ -32,6 +32,8 @@ const initialCards = [
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
 const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
+const editProfileSubmitBtn =
+  editProfileModal.querySelector(".modal__submit-btn");
 const editProfileForm = editProfileModal.querySelector(".modal__form");
 const editProfileNameInput = editProfileModal.querySelector(
   "#profile-name-input"
@@ -46,6 +48,7 @@ const profileDescriptionEl = document.querySelector(".profile__description");
 const newPostBtn = document.querySelector(".profile__new-post-btn");
 const newPostModal = document.querySelector("#new-post-modal");
 const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
+const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const newPostForm = newPostModal.querySelector(".modal__form");
 const newPostCardImageLinkInput =
   newPostModal.querySelector("#card-image-input");
@@ -108,7 +111,7 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   profileTitleEl.textContent = editProfileNameInput.value;
   profileDescriptionEl.textContent = editProfileDescriptionInput.value;
-
+  editProfileSubmitBtn.classList.add("modal__btn_disabled");
   closeModal(editProfileModal);
 }
 
@@ -122,7 +125,7 @@ function handleNewPostSubmit(evt) {
   };
   const cardElement = getCardElement(data);
   cardsList.prepend(cardElement);
-
+  newPostSubmitBtn.classList.add("modal__btn_disabled");
   evt.target.reset();
   closeModal(newPostModal);
 }
@@ -132,6 +135,8 @@ newPostForm.addEventListener("submit", handleNewPostSubmit);
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileTitleEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
+  hideInputError(editProfileModal, editProfileNameInput, settings);
+  hideInputError(editProfileModal, editProfileDescriptionInput, settings);
   openModal(editProfileModal);
 });
 
