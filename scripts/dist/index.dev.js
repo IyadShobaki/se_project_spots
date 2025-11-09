@@ -75,10 +75,27 @@ previewImageCloseBtn.addEventListener("click", function () {
 
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
+  document.addEventListener("keyup", handleEscClose);
+  modal.addEventListener("mousedown", handleOverlayClick);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
+  document.removeEventListener("keyup", handleEscClose);
+  modal.removeEventListener("mousedown", handleOverlayClick);
+}
+
+function handleEscClose(evt) {
+  if (evt.key === "Escape") {
+    var modal = document.querySelector(".modal_is-opened");
+    closeModal(modal);
+  }
+}
+
+function handleOverlayClick(evt) {
+  if (evt.target.classList.contains("modal_is-opened")) {
+    closeModal(evt.target);
+  }
 }
 
 function handleEditProfileSubmit(evt) {
