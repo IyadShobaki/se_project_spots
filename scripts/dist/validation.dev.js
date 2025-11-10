@@ -37,8 +37,10 @@ var hasInvalidInput = function hasInvalidInput(inputList) {
 var toggleBtnState = function toggleBtnState(inputList, btnElement, config) {
   if (hasInvalidInput(inputList)) {
     btnElement.classList.add(config.inactiveBtnClass);
+    btnElement.disabled = true;
   } else {
     btnElement.classList.remove(config.inactiveBtnClass);
+    btnElement.disabled = false;
   }
 };
 

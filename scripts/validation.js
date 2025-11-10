@@ -40,8 +40,10 @@ const hasInvalidInput = (inputList) => {
 const toggleBtnState = (inputList, btnElement, config) => {
   if (hasInvalidInput(inputList)) {
     btnElement.classList.add(config.inactiveBtnClass);
+    btnElement.disabled = true;
   } else {
     btnElement.classList.remove(config.inactiveBtnClass);
+    btnElement.disabled = false;
   }
 };
 

@@ -75,40 +75,42 @@ previewImageCloseBtn.addEventListener("click", function () {
 
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
-  document.addEventListener("keyup", handleEscClose);
-  modal.addEventListener("mousedown", handleOverlayClick);
+  document.addEventListener("keyup", closeOnEscape);
+  modal.addEventListener("mousedown", closeOnOverlayClick);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
-  document.removeEventListener("keyup", handleEscClose);
-  modal.removeEventListener("mousedown", handleOverlayClick);
+  document.removeEventListener("keyup", closeOnEscape);
+  modal.removeEventListener("mousedown", closeOnOverlayClick);
 }
 
-function handleEscClose(evt) {
+function closeOnEscape(evt) {
   if (evt.key === "Escape") {
     var modal = document.querySelector(".modal_is-opened");
     closeModal(modal);
   }
 }
 
-function handleOverlayClick(evt) {
-  if (evt.target.classList.contains("modal_is-opened")) {
+function closeOnOverlayClick(evt) {
+  if (evt.target.classList.contains("modal")) {
     closeModal(evt.target);
   }
 }
 
 function handleEditProfileSubmit(evt) {
+  if (!editProfileForm.checkValidity()) return;
   evt.preventDefault();
   profileTitleEl.textContent = editProfileNameInput.value;
   profileDescriptionEl.textContent = editProfileDescriptionInput.value;
-  editProfileSubmitBtn.classList.add("modal__btn_disabled");
+  editProfileSubmitBtn.classList.add(settings.inactiveBtnClass);
   closeModal(editProfileModal);
 }
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleNewPostSubmit(evt) {
+  if (!newPostForm.checkValidity()) return;
   evt.preventDefault();
   var data = {
     name: newPostCardCaptionInput.value,
@@ -116,7 +118,7 @@ function handleNewPostSubmit(evt) {
   };
   var cardElement = getCardElement(data);
   cardsList.prepend(cardElement);
-  newPostSubmitBtn.classList.add("modal__btn_disabled");
+  newPostSubmitBtn.classList.add(settings.inactiveBtnClass);
   evt.target.reset();
   closeModal(newPostModal);
 }
