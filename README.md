@@ -20,8 +20,8 @@ Spots is a social media web application where users can share their favorite pho
 
 **Github Pages**
 
-- [Spots Website URL](https://iyadshobaki.github.io/se_project_spots/)
+- <a href="https://iyadshobaki.github.io/se_project_spots/" target="_blank">Spots Website URL</a>
 
 **Project Pitch Video**
 
-You can watch the project walkthrough video [here](https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link).
+You can watch the project walkthrough video <a href="https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link" target="_blank">here</a>
