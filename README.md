@@ -14,14 +14,15 @@ Spots is a social media web application where users can share their favorite pho
 **Technologies Used**
 
 - HTML5
-- CSS3
+- CSS3 (BEM methodology)
 - JavaScript
+- Webpack
 - Github for source control and GitHub Pages (for deployment)
 
 **Github Pages**
 
-- <a href="https://iyadshobaki.github.io/se_project_spots/" target="_blank">Spots Website URL</a>
+- [Spots Website URL](https://iyadshobaki.github.io/se_project_spots/)
 
 **Project Pitch Video**
 
-You can watch the project walkthrough video <a href="https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link" target="_blank">here</a>
+You can watch the project walkthrough video [here](https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link).
