@@ -1,5 +1,9 @@
 import "./index.css";
-import { enableValidation, settings } from "../scripts/validation.js";
+import {
+  enableValidation,
+  hideInputError,
+  settings,
+} from "../scripts/validation.js";
 import Api from "../utils/api.js";
 
 const api = new Api({
@@ -10,12 +14,18 @@ const api = new Api({
   },
 });
 
-api.getInitalCards().then((cards) => {
-  cards.forEach((card) => {
-    const cardElement = getCardElement(card);
-    cardsList.append(cardElement);
-  });
-});
+api
+  .getAppInfo()
+  .then(([cards, user]) => {
+    cards.forEach((card) => {
+      const cardElement = getCardElement(card);
+      cardsList.append(cardElement);
+    });
+    profileTitleEl.textContent = user.name;
+    profileDescriptionEl.textContent = user.about;
+    profileAvatarEl.src = user.avatar;
+  })
+  .catch(console.error);
 
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
@@ -32,6 +42,7 @@ const editProfileDescriptionInput = editProfileModal.querySelector(
 
 const profileTitleEl = document.querySelector(".profile__title");
 const profileDescriptionEl = document.querySelector(".profile__description");
+const profileAvatarEl = document.querySelector(".profile__avatar");
 
 const newPostBtn = document.querySelector(".profile__new-post-btn");
 const newPostModal = document.querySelector("#new-post-modal");
@@ -113,10 +124,18 @@ function closeOnOverlayClick(evt) {
 function handleEditProfileSubmit(evt) {
   if (!editProfileForm.checkValidity()) return;
   evt.preventDefault();
-  profileTitleEl.textContent = editProfileNameInput.value;
-  profileDescriptionEl.textContent = editProfileDescriptionInput.value;
-  editProfileSubmitBtn.classList.add(settings.inactiveBtnClass);
-  closeModal(editProfileModal);
+  api
+    .editUserInfo({
+      name: editProfileNameInput.value,
+      about: editProfileDescriptionInput.value,
+    })
+    .then((updatedUser) => {
+      profileTitleEl.textContent = updatedUser.name;
+      profileDescriptionEl.textContent = updatedUser.about;
+      editProfileSubmitBtn.classList.add(settings.inactiveBtnClass);
+      closeModal(editProfileModal);
+    })
+    .catch(console.error);
 }
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
@@ -124,15 +143,23 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 function handleNewPostSubmit(evt) {
   if (!newPostForm.checkValidity()) return;
   evt.preventDefault();
-  const data = {
-    name: newPostCardCaptionInput.value,
-    link: newPostCardImageLinkInput.value,
-  };
-  const cardElement = getCardElement(data);
-  cardsList.prepend(cardElement);
-  newPostSubmitBtn.classList.add(settings.inactiveBtnClass);
-  evt.target.reset();
-  closeModal(newPostModal);
+  api
+    .createNewCard({
+      name: newPostCardCaptionInput.value,
+      link: newPostCardImageLinkInput.value,
+    })
+    .then((card) => {
+      const data = {
+        name: card.name,
+        link: card.link,
+      };
+      const cardElement = getCardElement(data);
+      cardsList.prepend(cardElement);
+      newPostSubmitBtn.classList.add(settings.inactiveBtnClass);
+      evt.target.reset();
+      closeModal(newPostModal);
+    })
+    .catch(console.error);
 }
 
 newPostForm.addEventListener("submit", handleNewPostSubmit);
@@ -140,12 +167,8 @@ newPostForm.addEventListener("submit", handleNewPostSubmit);
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileTitleEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
-  //hideInputError(editProfileModal, editProfileNameInput, settings);
-  // hideInputError(
-  //   editProfileModal,
-  //   editProfileDescriptionInput,
-  //   settings
-  // );
+  hideInputError(editProfileModal, editProfileNameInput, settings);
+  hideInputError(editProfileModal, editProfileDescriptionInput, settings);
   openModal(editProfileModal);
 });
 
