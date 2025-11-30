@@ -16,18 +16,26 @@ const api = new Api({
 });
 
 // Populate cards and profile Api request
-api
-  .getAppInfo()
-  .then(([cards, user]) => {
-    cards.forEach((card) => {
-      const cardElement = getCardElement(card);
-      cardsList.append(cardElement);
-    });
-    profileTitleEl.textContent = user.name;
-    profileDescriptionEl.textContent = user.about;
-    profileAvatarEl.src = user.avatar;
-  })
-  .catch(console.error);
+
+/* Add async function to solve this intermittent error when page loadded first time:
+ "Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true,
+ but the message channel closed before a response was received" */
+async function populateInfo() {
+  await api
+    .getAppInfo()
+    .then(([cards, user]) => {
+      cards.forEach((card) => {
+        const cardElement = getCardElement(card);
+        cardsList.append(cardElement);
+      });
+      profileTitleEl.textContent = user.name;
+      profileDescriptionEl.textContent = user.about;
+      profileAvatarEl.src = user.avatar;
+    })
+    .catch(console.error);
+}
+
+populateInfo();
 
 // Avatar form elements
 const editAvatarBtn = document.querySelector(".profile__avatar-btn");
