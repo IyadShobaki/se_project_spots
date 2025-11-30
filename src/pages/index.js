@@ -17,25 +17,18 @@ const api = new Api({
 
 // Populate cards and profile Api request
 
-/* Add async function to solve this intermittent error when page loadded first time:
- "Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true,
- but the message channel closed before a response was received" */
-async function populateInfo() {
-  await api
-    .getAppInfo()
-    .then(([cards, user]) => {
-      cards.forEach((card) => {
-        const cardElement = getCardElement(card);
-        cardsList.append(cardElement);
-      });
-      profileTitleEl.textContent = user.name;
-      profileDescriptionEl.textContent = user.about;
-      profileAvatarEl.src = user.avatar;
-    })
-    .catch(console.error);
-}
-
-populateInfo();
+api
+  .getAppInfo()
+  .then(([cards, user]) => {
+    cards.forEach((card) => {
+      const cardElement = getCardElement(card);
+      cardsList.append(cardElement);
+    });
+    profileTitleEl.textContent = user.name;
+    profileDescriptionEl.textContent = user.about;
+    profileAvatarEl.src = user.avatar;
+  })
+  .catch(console.error);
 
 // Avatar form elements
 const editAvatarBtn = document.querySelector(".profile__avatar-btn");
@@ -82,6 +75,50 @@ const previewImageCloseBtn =
 const previewImage = previewImageModal.querySelector(".modal__image");
 const previewImageCaption = previewImageModal.querySelector(".modal__caption");
 
+// Confirmation popup elements
+
+const confirmationModal = document.querySelector("#confirmation-modal");
+const confirmationtForm = confirmationModal.querySelector(".modal__form");
+const confirmationDeleteBtn = confirmationModal.querySelector(
+  ".modale__submit-btn_type_delete"
+);
+
+let selectedCard, selcetedCardId;
+
+// Confirmation open/close modal and handle form submission
+
+function handleDeleteBtnClick(cardElement, data) {
+  selectedCard = cardElement;
+  selcetedCardId = data._id;
+  openModal(confirmationModal);
+}
+
+function handleDeleteCardSubmit(evt) {
+  evt.preventDefault();
+
+  api
+    .deleteCard(selcetedCardId)
+    .then(() => {
+      selectedCard.remove();
+      selectedCard = "";
+      selcetedCardId = "";
+      closeModal(confirmationModal);
+    })
+    .catch(console.error);
+}
+
+confirmationtForm.addEventListener("submit", handleDeleteCardSubmit);
+
+confirmationModal.addEventListener("mousedown", (evt) => {
+  if (
+    evt.target.classList.contains("modal__close-btn") ||
+    evt.target.classList.contains("modale__submit-btn_type_cancel")
+  ) {
+    selectedCard = "";
+    selcetedCardId = "";
+    closeModal(confirmationModal);
+  }
+});
 // Cards related elements
 const cardsList = document.querySelector(".cards__list");
 
@@ -105,9 +142,9 @@ function getCardElement(data) {
   });
 
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
-  cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
-  });
+  cardDeleteBtn.addEventListener("click", () =>
+    handleDeleteBtnClick(cardElement, data)
+  );
 
   cardImageLink.addEventListener("click", () => {
     previewImageCaption.textContent = data.name;

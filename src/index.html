@@ -30,15 +30,11 @@
                 class="profile__pencil-icon"
               />
             </button>
-            <img
-              src="<%=require('./images/avatar.jpg')%>"
-              alt="Profile avatar"
-              class="profile__avatar"
-            />
+            <img src="" alt="Profile avatar" class="profile__avatar" />
           </div>
           <div class="profile__column">
-            <h1 class="profile__title">Bessie Coleman</h1>
-            <p class="profile__description">Civil Aviator</p>
+            <h1 class="profile__title"></h1>
+            <p class="profile__description"></p>
             <button type="button" class="profile__edit-btn">
               <img
                 src="<%=require('./images/pencil.svg')%>"
@@ -179,6 +175,34 @@
               ></span>
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal" id="confirmation-modal">
+        <div class="modal__container modal__container_type_confirmation">
+          <div class="modal__header">
+            <h2 class="modal__title modal__title_type_confirmation">
+              Are you sure yu want to delete this image?
+            </h2>
+            <button
+              type="button"
+              class="modal__close-btn modal__close-btn_type_confirmation"
+              aria-label="Close modal"
+            ></button>
+          </div>
+          <form class="modal__form modal__form_type_buttons">
+            <button
+              type="submit"
+              class="modal__submit-btn modale__submit-btn_type_delete"
+            >
+              Deleting...
+            </button>
+            <button
+              type="button"
+              class="modal__submit-btn modale__submit-btn_type_cancel"
+            >
+              Cancel
+            </button>
           </form>
         </div>
       </div>

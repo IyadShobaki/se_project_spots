@@ -29,17 +29,6 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  createNewCard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({
-        name,
-        link,
-      }),
-    }).then(this._checkResponse);
-  }
-
   editUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -58,6 +47,24 @@ class Api {
       body: JSON.stringify({
         avatar: link,
       }),
+    }).then(this._checkResponse);
+  }
+
+  createNewCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
     }).then(this._checkResponse);
   }
 }

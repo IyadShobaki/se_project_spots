@@ -13,6 +13,7 @@
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s ease-in;
 }
+
 .modal_is-opened {
   visibility: visible;
   opacity: 1;
@@ -129,6 +130,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .modal__close-btn_type_preview {
   background-image: url(../images/close-preview.svg);
   position: absolute;
@@ -162,6 +164,58 @@
   align-self: flex-start;
 }
 
+.modal__container_type_confirmation {
+  max-width: 630px;
+  padding: 32px 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.modal__title_type_confirmation {
+  font-size: 24px;
+}
+.modal__close-btn_type_confirmation {
+  background-image: url(../images/close-preview.svg);
+  position: absolute;
+  background-color: transparent;
+  right: -52.5px;
+  top: 0;
+  opacity: 1;
+}
+.modal__close-btn_type_confirmation:hover {
+  opacity: 0.4;
+}
+.modal__form_type_buttons {
+  flex-direction: row;
+  gap: 20px;
+}
+.modale__submit-btn_type_delete {
+  width: 156px;
+  background-color: rgba(255, 101, 101, 1);
+  color: black;
+}
+.modale__submit-btn_type_delete:hover {
+  background-color: rgba(255, 51, 51, 1);
+}
+.modale__submit-btn_type_cancel {
+  width: 156px;
+  border: 1px solid rgba(33, 33, 33, 1);
+  background-color: #fff;
+  color: black;
+}
+
+.modale__submit-btn_type_cancel:hover {
+  background-color: rgba(33, 33, 33, 1);
+  color: #fff;
+}
+@media screen and (max-width: 755px) {
+  .modal__close-btn_type_confirmation {
+    right: 0;
+    top: -48px;
+    margin: 0;
+  }
+}
 @media screen and (max-width: 627px) {
   .modal__container {
     padding: 12px;
@@ -196,5 +250,23 @@
   }
   .modal__caption {
     font-size: 16px;
+  }
+  .modal__title_type_confirmation {
+    line-height: 1.2;
+  }
+  .modal__close-btn_type_confirmation {
+    right: 0;
+    top: -48px;
+    margin: 0;
+  }
+  .modal__form_type_buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .modale__submit-btn_type_delete {
+    padding: 18px 32px;
+  }
+  .modale__submit-btn_type_cancel {
+    padding: 18px 32px;
   }
 }
