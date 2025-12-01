@@ -67,6 +67,13 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
+  toggleLike(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: isLiked ? "DELETE" : "PUT",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
 }
 
 export default Api;

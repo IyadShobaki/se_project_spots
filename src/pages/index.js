@@ -16,11 +16,12 @@ const api = new Api({
 });
 
 // Populate cards and profile Api request
-
+let cardsArray;
 api
   .getAppInfo()
   .then(([cards, user]) => {
-    cards.forEach((card) => {
+    cardsArray = cards;
+    cardsArray.forEach((card) => {
       const cardElement = getCardElement(card);
       cardsList.append(cardElement);
     });
@@ -79,46 +80,9 @@ const previewImageCaption = previewImageModal.querySelector(".modal__caption");
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const confirmationtForm = confirmationModal.querySelector(".modal__form");
-const confirmationDeleteBtn = confirmationModal.querySelector(
-  ".modale__submit-btn_type_delete"
-);
 
 let selectedCard, selcetedCardId;
 
-// Confirmation open/close modal and handle form submission
-
-function handleDeleteBtnClick(cardElement, data) {
-  selectedCard = cardElement;
-  selcetedCardId = data._id;
-  openModal(confirmationModal);
-}
-
-function handleDeleteCardSubmit(evt) {
-  evt.preventDefault();
-
-  api
-    .deleteCard(selcetedCardId)
-    .then(() => {
-      selectedCard.remove();
-      selectedCard = "";
-      selcetedCardId = "";
-      closeModal(confirmationModal);
-    })
-    .catch(console.error);
-}
-
-confirmationtForm.addEventListener("submit", handleDeleteCardSubmit);
-
-confirmationModal.addEventListener("mousedown", (evt) => {
-  if (
-    evt.target.classList.contains("modal__close-btn") ||
-    evt.target.classList.contains("modale__submit-btn_type_cancel")
-  ) {
-    selectedCard = "";
-    selcetedCardId = "";
-    closeModal(confirmationModal);
-  }
-});
 // Cards related elements
 const cardsList = document.querySelector(".cards__list");
 
@@ -137,9 +101,8 @@ function getCardElement(data) {
   cardTitle.textContent = data.name;
 
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
-  cardLikeBtn.addEventListener("click", (evt) => {
-    evt.target.classList.toggle("card__like-btn_active");
-  });
+  if (data.isLiked) cardLikeBtn.classList.add("card__like-btn_active");
+  cardLikeBtn.addEventListener("click", (evt) => handleLikeBtnClick(evt, data));
 
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
   cardDeleteBtn.addEventListener("click", () =>
@@ -276,4 +239,57 @@ editAvatarForm.addEventListener("submit", handleEditAvatarSubmit);
 editAvatarCloseBtn.addEventListener("click", () => {
   closeModal(editAvatarModal);
 });
+
+// Confirmation open/close modal and handle form submission
+
+function handleDeleteBtnClick(cardElement, data) {
+  selectedCard = cardElement;
+  selcetedCardId = data._id;
+  openModal(confirmationModal);
+}
+
+function handleDeleteCardSubmit(evt) {
+  evt.preventDefault();
+
+  api
+    .deleteCard(selcetedCardId)
+    .then(() => {
+      selectedCard.remove();
+      selectedCard = "";
+      selcetedCardId = "";
+      closeModal(confirmationModal);
+    })
+    .catch(console.error);
+}
+
+confirmationtForm.addEventListener("submit", handleDeleteCardSubmit);
+
+confirmationModal.addEventListener("mousedown", (evt) => {
+  if (
+    evt.target.classList.contains("modal__close-btn") ||
+    evt.target.classList.contains("modale__submit-btn_type_cancel")
+  ) {
+    selectedCard = "";
+    selcetedCardId = "";
+    closeModal(confirmationModal);
+  }
+});
+
+function handleLikeBtnClick(evt, data) {
+  //const isLiked = evt.target.classList.contains("card__like-btn_active");
+  api
+    .toggleLike(data._id, data.isLiked) // isLiked)
+    .then((updatedCard) => {
+      const index = cardsArray.findIndex((card) => card._id === data._id);
+
+      cardsArray[index] = updatedCard;
+      cardsList.innerHTML = "";
+      cardsArray.forEach((card) => {
+        const cardElement = getCardElement(card);
+        cardsList.append(cardElement);
+      });
+      evt.target.classList.toggle("card__like-btn_active");
+    })
+    .catch(console.error);
+}
 enableValidation(settings);
