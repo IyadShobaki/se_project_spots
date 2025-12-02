@@ -5,6 +5,7 @@ import {
   settings,
 } from "../scripts/validation.js";
 import Api from "../utils/api.js";
+import { setButtonText } from "../utils/helper.js";
 
 // API
 const api = new Api({
@@ -162,6 +163,10 @@ editProfileBtn.addEventListener("click", function () {
 function handleEditProfileSubmit(evt) {
   if (!editProfileForm.checkValidity()) return;
   evt.preventDefault();
+
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true);
+
   api
     .editUserInfo({
       name: editProfileNameInput.value,
@@ -173,7 +178,10 @@ function handleEditProfileSubmit(evt) {
       editProfileSubmitBtn.classList.add(settings.inactiveBtnClass);
       closeModal(editProfileModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
@@ -190,6 +198,10 @@ newPostBtn.addEventListener("click", function () {
 function handleNewPostSubmit(evt) {
   if (!newPostForm.checkValidity()) return;
   evt.preventDefault();
+
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true);
+
   api
     .createNewCard({
       name: newPostCardCaptionInput.value,
@@ -206,7 +218,10 @@ function handleNewPostSubmit(evt) {
       evt.target.reset();
       closeModal(newPostModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 newPostForm.addEventListener("submit", handleNewPostSubmit);
@@ -223,6 +238,8 @@ editAvatarBtn.addEventListener("click", () => {
 function handleEditAvatarSubmit(evt) {
   if (!editAvatarForm.checkValidity()) return;
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true);
   api
     .editAvatar(editAvatarInput.value)
     .then((data) => {
@@ -231,7 +248,10 @@ function handleEditAvatarSubmit(evt) {
       evt.target.reset();
       closeModal(editAvatarModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 editAvatarForm.addEventListener("submit", handleEditAvatarSubmit);
@@ -251,6 +271,9 @@ function handleDeleteBtnClick(cardElement, data) {
 function handleDeleteCardSubmit(evt) {
   evt.preventDefault();
 
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true);
+
   api
     .deleteCard(selcetedCardId)
     .then(() => {
@@ -259,7 +282,10 @@ function handleDeleteCardSubmit(evt) {
       selcetedCardId = "";
       closeModal(confirmationModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 confirmationtForm.addEventListener("submit", handleDeleteCardSubmit);
@@ -288,7 +314,7 @@ function handleLikeBtnClick(evt, data) {
         const cardElement = getCardElement(card);
         cardsList.append(cardElement);
       });
-      evt.target.classList.toggle("card__like-btn_active");
+      //evt.target.classList.toggle("card__like-btn_active");
     })
     .catch(console.error);
 }
