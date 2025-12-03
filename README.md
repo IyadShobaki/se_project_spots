@@ -25,4 +25,8 @@ Spots is a social media web application where users can share their favorite pho
 
 **Project Pitch Video**
 
-You can watch the project walkthrough video [here](https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link).
+Check out these videos, where I describe my project
+and some challenges I faced while building it:
+
+- [Spots First Video](https://drive.google.com/file/d/1NqnqTC1ot6IxvYm4Pd4LPyWK7KT3_85o/view?usp=drive_link).
+- [Spots Second Video](https://drive.google.com/file/d/15JDC1yKgLlJAaLhLdY8Tek6UMch71W5W/view?usp=drive_link)
