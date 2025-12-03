@@ -18,14 +18,18 @@ const api = new Api({
 
 // Populate cards and profile Api request
 let cardsArray;
+
+function reloadCards() {
+  cardsArray.forEach((card) => {
+    const cardElement = getCardElement(card);
+    cardsList.append(cardElement);
+  });
+}
 api
   .getAppInfo()
   .then(([cards, user]) => {
     cardsArray = cards;
-    cardsArray.forEach((card) => {
-      const cardElement = getCardElement(card);
-      cardsList.append(cardElement);
-    });
+    reloadCards();
     profileTitleEl.textContent = user.name;
     profileDescriptionEl.textContent = user.about;
     profileAvatarEl.src = user.avatar;
@@ -82,7 +86,7 @@ const previewImageCaption = previewImageModal.querySelector(".modal__caption");
 const confirmationModal = document.querySelector("#confirmation-modal");
 const confirmationtForm = confirmationModal.querySelector(".modal__form");
 
-let selectedCard, selcetedCardId;
+let selectedCard, selectedCardId;
 
 // Cards related elements
 const cardsList = document.querySelector(".cards__list");
@@ -212,8 +216,11 @@ function handleNewPostSubmit(evt) {
         name: card.name,
         link: card.link,
       };
-      const cardElement = getCardElement(data);
-      cardsList.prepend(cardElement);
+      //const cardElement = getCardElement(data);
+      cardsArray.unshift(card);
+      cardsList.innerHTML = "";
+      reloadCards();
+      //cardsList.prepend(cardElement);
       newPostSubmitBtn.classList.add(settings.inactiveBtnClass);
       evt.target.reset();
       closeModal(newPostModal);
@@ -264,7 +271,8 @@ editAvatarCloseBtn.addEventListener("click", () => {
 
 function handleDeleteBtnClick(cardElement, data) {
   selectedCard = cardElement;
-  selcetedCardId = data._id;
+  selectedCardId = data._id;
+  console.log(selectedCardId);
   openModal(confirmationModal);
 }
 
@@ -275,11 +283,15 @@ function handleDeleteCardSubmit(evt) {
   setButtonText(submitBtn, true);
 
   api
-    .deleteCard(selcetedCardId)
+    .deleteCard(selectedCardId)
     .then(() => {
-      selectedCard.remove();
+      // selectedCard.remove();
+      const index = cardsArray.findIndex((card) => card._id === selectedCardId);
+      cardsArray.splice(index, 1);
+      cardsList.innerHTML = "";
+      reloadCards();
       selectedCard = "";
-      selcetedCardId = "";
+      selectedCardId = "";
       closeModal(confirmationModal);
     })
     .catch(console.error)
@@ -296,7 +308,7 @@ confirmationModal.addEventListener("mousedown", (evt) => {
     evt.target.classList.contains("modale__submit-btn_type_cancel")
   ) {
     selectedCard = "";
-    selcetedCardId = "";
+    selectedCardId = "";
     closeModal(confirmationModal);
   }
 });
@@ -310,12 +322,10 @@ function handleLikeBtnClick(evt, data) {
 
       cardsArray[index] = updatedCard;
       cardsList.innerHTML = "";
-      cardsArray.forEach((card) => {
-        const cardElement = getCardElement(card);
-        cardsList.append(cardElement);
-      });
+      reloadCards();
       //evt.target.classList.toggle("card__like-btn_active");
     })
     .catch(console.error);
 }
+
 enableValidation(settings);
