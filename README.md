@@ -9,15 +9,14 @@
 
 **Intro**
 
-Spots is a social media web application where users can share their favorite photos, customize their profiles, and interact with others by liking their posts. The website features a modern and responsive web application to deliver visually balanced and user-friendly experience on different devices.
+Spots is a social media web application where users can upload, like, delete, manage images dynamically, and edit their profiles. The website features a modern and responsive web application to deliver visually balanced and user-friendly experience on different devices. Built to practice front-end development skills and learning real-time data rendering, responsive design, and modern build tools.
 
-**Technologies Used**
+**Technologies & Techniques Learned**
 
-- HTML5
-- CSS3 (BEM methodology)
-- JavaScript
-- Webpack
-- Github for source control and GitHub Pages (for deployment)
+- Languages & Frameworks: HTML5, CSS3 (BEM methodology), JavaScript
+- Tools: Webpack for bundling, npm for dependency management, Github for source control and GitHub Pages (for deployment)
+- Concepts: DOM manipulation, responsive layouts (Flexbox & Grid), API integration for dynamic content
+- UI Features: Card rendering, modals, form validation, interactive like system
 
 **Github Pages**
 
